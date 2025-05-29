@@ -1,10 +1,8 @@
-import entities.Employee;
-import entities.OutsourcedEmployee;
+import entities.Product;
+import entities.ImportedProducct;
+import entities.UsedProduct;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -13,44 +11,39 @@ public class Main {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
 
-        List<Employee> employeeList = new ArrayList<>();
+        List<Product> productList = new ArrayList<>();
 
 
-        System.out.print("Enter the number of employees: ");
+        System.out.print("Enter the number of products: ");
         int n = sc.nextInt();
 
-        for(int i = 0; i < n; i++){
-
-            System.out.printf("Employee #%d data: ", i + 1);
-            System.out.print("Outsourced (y/n)? ");
-            char quest = sc.next().charAt(0);
+        for (int i = 0; i < n; i++) {
+            System.out.printf("Product #%d data:%n", i + 1);
+            System.out.print("Common, used or imported (c/u/i)? ");
+            char choice = sc.next().charAt(0);
 
             System.out.print("Name: ");
             sc.nextLine();
             String name = sc.nextLine();
+            System.out.print("Price: ");
+            double price = sc.nextDouble();
 
-            System.out.print("Hours: ");
-            Integer hours = sc.nextInt();
-
-            System.out.print("Value per hour: ");
-            double valuePerHour = sc.nextDouble();
-
-            if (quest != 'y') {
-                Employee employee = new Employee(name, hours, valuePerHour);
-                employeeList.add(employee);
-            } else {
-                System.out.print("Addiditional Charge: ");
-                double additional = sc.nextDouble();
-                Employee secondEmployee = new OutsourcedEmployee(name, hours, valuePerHour, additional);
-                employeeList.add(secondEmployee);
+            if (choice == 'c') {
+                productList.add(new Product(name, price));
+            }
+            else if (choice == 'i') {
+                System.out.print("Customs fee: ");
+                double cunstomsFee = sc.nextDouble();
+                productList.add(new ImportedProducct(name, price, cunstomsFee));
+            }
+            else if (choice == 'u'){
+                Date manufactureDate = new Date();
+                productList.add(new UsedProduct(name, price, manufactureDate));
             }
 
         }
-
-        System.out.println("PAYMENTS: ");
-
-        for (Employee emp : employeeList) {
-          System.out.printf("%s - $ %.2f \n",emp.getName(), emp.payament());
+        for (Product p : productList) {
+            System.out.println(p.priceTag());
         }
 
         sc.close();
