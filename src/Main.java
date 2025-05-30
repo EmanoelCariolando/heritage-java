@@ -1,5 +1,5 @@
-import entities.Product;
 import entities.ImportedProducct;
+import entities.Product;
 import entities.UsedProduct;
 
 import java.util.*;
@@ -13,38 +13,17 @@ public class Main {
 
         List<Product> productList = new ArrayList<>();
 
+        productList.add(new ImportedProducct("Shoes", 100.0, 20.0));
+        productList.add(new UsedProduct("Tv",1000, new Date()));
+        productList.add(new ImportedProducct("T-shirt", 200.0, 25.0));
+        productList.add(new UsedProduct("Monitor",1000, new Date()));
 
-        System.out.print("Enter the number of products: ");
-        int n = sc.nextInt();
-
-        for (int i = 0; i < n; i++) {
-            System.out.printf("Product #%d data:%n", i + 1);
-            System.out.print("Common, used or imported (c/u/i)? ");
-            char choice = sc.next().charAt(0);
-
-            System.out.print("Name: ");
-            sc.nextLine();
-            String name = sc.nextLine();
-            System.out.print("Price: ");
-            double price = sc.nextDouble();
-
-            if (choice == 'c') {
-                productList.add(new Product(name, price));
-            }
-            else if (choice == 'i') {
-                System.out.print("Customs fee: ");
-                double cunstomsFee = sc.nextDouble();
-                productList.add(new ImportedProducct(name, price, cunstomsFee));
-            }
-            else if (choice == 'u'){
-                Date manufactureDate = new Date();
-                productList.add(new UsedProduct(name, price, manufactureDate));
-            }
-
-        }
+        double sum = 0.0;
         for (Product p : productList) {
-            System.out.println(p.priceTag());
+          sum += p.getPrice();
         }
+        System.out.println("Total: " + sum);
+
 
         sc.close();
 
