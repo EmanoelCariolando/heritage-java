@@ -1,31 +1,49 @@
-import entities.ImportedProducct;
-import entities.Product;
-import entities.UsedProduct;
 
+import Entities.Circle;
+import Entities.Rectangle;
+import Entities.Shape;
+import Enums.Color;
 import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Locale.setDefault(Locale.US);
-        Scanner sc = new Scanner(System.in);
+         Locale.setDefault(Locale.US);
+         Scanner sc = new Scanner(System.in);
 
-        List<Product> productList = new ArrayList<>();
+           List<Shape> shapes = new ArrayList<>();
 
-        productList.add(new ImportedProducct("Shoes", 100.0, 20.0));
-        productList.add(new UsedProduct("Tv",1000, new Date()));
-        productList.add(new ImportedProducct("T-shirt", 200.0, 25.0));
-        productList.add(new UsedProduct("Monitor",1000, new Date()));
+         System.out.print("Enter the number of shapes: ");
+         int n = sc.nextInt();
 
-        double sum = 0.0;
-        for (Product p : productList) {
-          sum += p.getPrice();
-        }
-        System.out.println("Total: " + sum);
+         for (int i = 0; i < n; i++) {
+             System.out.println("shape #" + (i + 1)+ "data: ");
+             System.out.print("Retangle or Circle (r/c)? : ");
+             char Questshapes = sc.next().charAt(0);
+             System.out.print("Color (BLACK/BLUE/RED)? :");
+             Color color = Color.valueOf(sc.next().toUpperCase());
 
+             if (Questshapes == 'r'){
+                 System.out.print("Enter the width: ");
+                 double width = sc.nextDouble();
+                 System.out.print("Enter the height: ");
+                 double height = sc.nextDouble();
+                 Shape re = new Rectangle(color, height, width);
+                 shapes.add(re);
+             }
+             else if (Questshapes == 'c') {
+                 System.out.print("Enter the radius: ");
+                 double radius = sc.nextDouble();
+                 Shape cir = new Circle(color, radius);
+                 shapes.add(cir);
+             }
+         }
+         System.out.println("Area of shapes: ");
+         for (Shape s: shapes) {
+             System.out.printf("%.2f%n",s.area());
+         }
 
-        sc.close();
 
  }
 }
