@@ -1,8 +1,8 @@
 
-import Entities.Circle;
-import Entities.Rectangle;
-import Entities.Shape;
-import Enums.Color;
+import Entities.Company;
+import Entities.Indie;
+import Entities.Taxpayer;
+
 import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -12,37 +12,41 @@ public class Main {
          Locale.setDefault(Locale.US);
          Scanner sc = new Scanner(System.in);
 
-           List<Shape> shapes = new ArrayList<>();
+         List<Taxpayer> completList = new ArrayList<>();
 
-         System.out.print("Enter the number of shapes: ");
+         System.out.print("Enter the taxpayer's name: ");
          int n = sc.nextInt();
 
-         for (int i = 0; i < n; i++) {
-             System.out.println("shape #" + (i + 1)+ "data: ");
-             System.out.print("Retangle or Circle (r/c)? : ");
-             char Questshapes = sc.next().charAt(0);
-             System.out.print("Color (BLACK/BLUE/RED)? :");
-             Color color = Color.valueOf(sc.next().toUpperCase());
+         for(int i = 0; i < n; i++){
+             System.out.println("Enter taxpayer #" + (i + 1) + " data: ");
+             System.out.print("Individual or company (i/c)? ");
+             char op = sc.next().charAt(0);
+             sc.nextLine();
+             System.out.print("Name: ");
+             String name = sc.nextLine();
+             System.out.print("Annual income: ");
+             double income = sc.nextDouble();
 
-             if (Questshapes == 'r'){
-                 System.out.print("Enter the width: ");
-                 double width = sc.nextDouble();
-                 System.out.print("Enter the height: ");
-                 double height = sc.nextDouble();
-                 Shape re = new Rectangle(color, height, width);
-                 shapes.add(re);
+             if(op == 'i'){
+                 System.out.print("Enter health expenditures: ");
+                 double healthExp = sc.nextDouble();
+                 completList.add(new Indie(income, name, healthExp));
              }
-             else if (Questshapes == 'c') {
-                 System.out.print("Enter the radius: ");
-                 double radius = sc.nextDouble();
-                 Shape cir = new Circle(color, radius);
-                 shapes.add(cir);
+             else if (op == 'c') {
+                 System.out.print("Number of employers: ");
+                 int employers = sc.nextInt();
+                 completList.add(new Company(income, name, employers));
              }
          }
-         System.out.println("Area of shapes: ");
-         for (Shape s: shapes) {
-             System.out.printf("%.2f%n",s.area());
+
+         double sum = 0.0;
+         for(Taxpayer t : completList){
+             System.out.printf("%s - $ %.2f%n", t.getName(), t.tax());
+             sum += t.tax();
          }
+
+         System.out.println();
+         System.out.printf("Total: $ %.2f%n", sum);
 
 
  }
